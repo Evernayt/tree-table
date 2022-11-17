@@ -1,0 +1,16 @@
+.container {
+  height: 42px;
+  border-bottom: 1px solid var(--border-color);
+
+  .fill {
+    width: 100%;
+  }
+
+  th {
+    font-weight: 400;
+    text-align: left;
+    color: var(--secondary-text-color);
+    padding: 0 12px;
+    white-space: nowrap;
+  }
+}

@@ -1,0 +1,8 @@
+.button {
+  cursor: pointer;
+  display: contents;
+
+  :active {
+    transform: scale(0.95);
+  }
+}

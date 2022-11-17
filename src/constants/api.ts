@@ -1,0 +1,4 @@
+const SERVER_API_URL = "http://185.244.172.108:8081/";
+const ENTITY_ID = 22216;
+
+export { SERVER_API_URL, ENTITY_ID };
