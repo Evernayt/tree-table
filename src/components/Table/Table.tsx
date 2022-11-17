@@ -5,7 +5,6 @@ import { getTreeRowsAPI } from "../../http/outlayAPI";
 import { setOutlaysAction } from "../../store/reducers/OutlaySlice";
 import styles from "./Table.module.scss";
 import TableHeader from "./TableHeader/TableHeader";
-import TableRow from "./TableRows/TableRow/TableRow";
 import TableRows from "./TableRows/TableRows";
 import TableTabs from "./TableTabs/TableTabs";
 
@@ -33,7 +32,16 @@ const Table = () => {
       <table className={styles.table}>
         <TableHeader />
         <tbody>
-          <TableRows outlays={outlays} />
+          {outlays.map((outlay) => (
+            <TableRows
+              outlay={outlay}
+              parentId={null}
+              level={0}
+              isLastChild={false}
+              isSingleParent={outlay.child.length === 1}
+              key={outlay.id}
+            />
+          ))}
         </tbody>
       </table>
     </div>

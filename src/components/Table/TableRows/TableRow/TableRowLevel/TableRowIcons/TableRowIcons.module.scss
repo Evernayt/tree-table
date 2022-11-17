@@ -1,0 +1,21 @@
+.icons {
+  z-index: 1;
+  padding: 1px;
+  border-radius: 6px;
+  display: flex;
+  transition: background-color 0.5s ease;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--table-icons-bg-color);
+
+    & .hide_icon {
+      width: 24px;
+    }
+  }
+}
+
+.hide_icon {
+  width: 0;
+  transition: width 0.5s ease;
+}

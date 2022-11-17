@@ -1,6 +1,10 @@
 .container {
   height: 42px;
-  border-bottom: 1px solid var(--border-color);
+  box-shadow: 0 1px var(--border-color);
+  position: sticky;
+  top: 0;
+  background-color: var(--table-bg-color);
+  z-index: 3;
 
   .fill {
     width: 100%;

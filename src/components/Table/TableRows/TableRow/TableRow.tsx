@@ -1,14 +1,19 @@
 import { FC } from "react";
 import { IOutlayTreeResponse } from "../../../../models/Outlay/IOutlayTreeResponse";
 import styles from "./TableRow.module.scss";
-import TableRowLevel from "./TableRowLevel/TableRowLevel";
+import TableRowLevel, { IRowLevel } from "./TableRowLevel/TableRowLevel";
 
-interface TableRowProps {
+interface TableRowProps extends IRowLevel {
   outlay: IOutlayTreeResponse;
-  parentId: number | null;
 }
 
-const TableRow: FC<TableRowProps> = ({ outlay, parentId }) => {
+const TableRow: FC<TableRowProps> = ({
+  outlay,
+  parentId,
+  level,
+  isLastChild,
+  isSingleParent,
+}) => {
   return (
     <tr className={styles.container}>
       <td>
@@ -16,15 +21,16 @@ const TableRow: FC<TableRowProps> = ({ outlay, parentId }) => {
           id={outlay.id}
           parentId={parentId}
           childCount={outlay.child.length}
-          level={1}
-          isLastChild={false}
+          level={level}
+          isLastChild={isLastChild}
+          isSingleParent={isSingleParent}
         />
       </td>
       <td>{outlay.rowName}</td>
-      <td>20 348</td>
-      <td>1 750</td>
-      <td>108,07</td>
-      <td>1 209 122,5</td>
+      <td>{outlay.salary.toLocaleString()}</td>
+      <td>{outlay.equipmentCosts.toLocaleString()}</td>
+      <td>{outlay.overheads.toLocaleString()}</td>
+      <td>{outlay.estimatedProfit.toLocaleString()}</td>
     </tr>
   );
 };
