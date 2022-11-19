@@ -1,0 +1,22 @@
+.textbox {
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background-color: transparent;
+  padding: 10px;
+  color: var(--placeholder-color);
+  outline: 0;
+  min-width: 50px;
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    appearance: none;
+  }
+
+  &[type="number"] {
+    appearance: textfield;
+  }
+
+  &:focus {
+    color: var(--secondary-text-color);
+  }
+}

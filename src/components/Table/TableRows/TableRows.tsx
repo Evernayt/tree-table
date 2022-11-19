@@ -7,29 +7,20 @@ interface TableRowsProps extends IRowLevel {
   outlay: IOutlayTreeResponse;
 }
 
-const TableRows: FC<TableRowsProps> = ({
-  outlay,
-  parentId,
-  level,
-  isLastChild,
-  isSingleParent,
-}) => {
+const TableRows: FC<TableRowsProps> = ({ outlay, parentId, level }) => {
   return (
     <>
       <TableRow
         outlay={outlay}
         parentId={parentId}
         level={level}
-        isLastChild={isLastChild}
-        isSingleParent={isSingleParent}
+        key={outlay.id}
       />
-      {outlay.child.map((childOutlay, index) => (
+      {outlay.child.map((childOutlay) => (
         <TableRows
           outlay={childOutlay}
           parentId={outlay.id}
           level={level + 1}
-          isLastChild={outlay.child.length === index + 1}
-          isSingleParent={isSingleParent}
           key={childOutlay.id}
         />
       ))}

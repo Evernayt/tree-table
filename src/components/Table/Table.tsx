@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { getTreeRowsAPI } from "../../http/outlayAPI";
 import { setOutlaysAction } from "../../store/reducers/OutlaySlice";
 import styles from "./Table.module.scss";
+import TableEmpty from "./TableEmpty/TableEmpty";
 import TableHeader from "./TableHeader/TableHeader";
 import TableRows from "./TableRows/TableRows";
 import TableTabs from "./TableTabs/TableTabs";
@@ -19,7 +20,6 @@ const Table = () => {
     getTreeRowsAPI(ENTITY_ID, controller.signal)
       .then((data) => {
         dispatch(setOutlaysAction(data));
-        console.log(data);
       })
       .catch(() => {});
 
@@ -29,21 +29,23 @@ const Table = () => {
   return (
     <div className={styles.container}>
       <TableTabs />
-      <table className={styles.table}>
-        <TableHeader />
-        <tbody>
-          {outlays.map((outlay) => (
-            <TableRows
-              outlay={outlay}
-              parentId={null}
-              level={0}
-              isLastChild={false}
-              isSingleParent={outlay.child.length === 1}
-              key={outlay.id}
-            />
-          ))}
-        </tbody>
-      </table>
+      {outlays.length > 0 ? (
+        <table className={styles.table}>
+          <TableHeader />
+          <tbody>
+            {outlays.map((outlay) => (
+              <TableRows
+                outlay={outlay}
+                parentId={null}
+                level={0}
+                key={outlay.id}
+              />
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <TableEmpty />
+      )}
     </div>
   );
 };

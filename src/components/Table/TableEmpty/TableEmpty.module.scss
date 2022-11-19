@@ -1,0 +1,21 @@
+.container {
+  width: 100%;
+  height: calc(100% - 45px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+
+  span {
+    font-size: 18px;
+    color: var(--secondary-text-color);
+  }
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}

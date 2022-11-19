@@ -17,6 +17,7 @@
     "react-redux": "^8.0.5",
     "react-scripts": "5.0.1",
     "sass": "^1.56.1",
+    "traverse": "^0.6.7",
     "typescript": "^4.9.3",
     "web-vitals": "^2.1.4"
   },
@@ -43,5 +44,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/traverse": "^0.6.32",
+    "gh-pages": "^4.0.0"
   }
 }

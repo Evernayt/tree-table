@@ -13,7 +13,11 @@ import {
 } from "../../../../../../icons";
 import { IOutlayRowRequest } from "../../../../../../models/Outlay/IOutlayRowRequest";
 import { IOutlayTreeResponse } from "../../../../../../models/Outlay/IOutlayTreeResponse";
-import { addOutlayAction } from "../../../../../../store/reducers/OutlaySlice";
+import {
+  addOutlayAction,
+  deleteOutlayAction,
+  setSelectedRowIdAction,
+} from "../../../../../../store/reducers/OutlaySlice";
 import styles from "./TableRowIcons.module.scss";
 
 interface TableRowIconsProps {
@@ -25,7 +29,9 @@ interface TableRowIconsProps {
 const TableRowIcons: FC<TableRowIconsProps> = ({ id, parentId, level }) => {
   const dispatch = useAppDispatch();
 
-  const createRow = (parentId: number | null) => {
+  const createRow = (parentId: number | null, iterations: number = 1) => {
+    if (iterations < 1) return;
+
     const outlay: IOutlayRowRequest = {
       parentId,
       equipmentCosts: 0,
@@ -35,35 +41,29 @@ const TableRowIcons: FC<TableRowIconsProps> = ({ id, parentId, level }) => {
       materials: 0,
       mimExploitation: 0,
       overheads: 0,
-      rowName: "test" + new Date().getTime(),
+      rowName: "",
       salary: 0,
       supportCosts: 0,
     };
 
-    const createdOutlay: IOutlayTreeResponse = {
-      ...outlay,
-      id: new Date().getTime(),
-      total: 0,
-      child: [],
-    };
-    if (parentId)
+    createRowInEntityAPI(ENTITY_ID, outlay).then((data) => {
+      const createdOutlay: IOutlayTreeResponse = {
+        ...data.current,
+        child: [],
+      };
       dispatch(addOutlayAction({ parentId, outlay: createdOutlay }));
 
-    // createRowInEntityAPI(ENTITY_ID, outlay).then((data) => {
-    //   const createdOutlay: IOutlayTreeResponse = {
-    //     ...outlay,
-    //     id: new Date().getTime(),
-    //     total: 0,
-    //     child: [],
-    //   };
-    //   console.log(data.current)
-    //   dispatch(addOutlayAction(parentId, createdOutlay));
-    // });
+      if (iterations > 1) {
+        createRow(data.current.id, iterations - 1);
+      } else {
+        dispatch(setSelectedRowIdAction(data.current.id));
+      }
+    });
   };
 
   const deleteRow = (id: number) => {
-    deleteRowAPI(ENTITY_ID, id).then((data) => {
-      console.log(data);
+    deleteRowAPI(ENTITY_ID, id).then(() => {
+      dispatch(deleteOutlayAction(id));
     });
   };
 
@@ -98,7 +98,7 @@ const TableRowIcons: FC<TableRowIconsProps> = ({ id, parentId, level }) => {
             <img
               className={styles.hide_icon}
               src={docIcon}
-              onClick={() => createRow(id)}
+              onClick={() => createRow(id, 2)}
             />
           </>
         );
